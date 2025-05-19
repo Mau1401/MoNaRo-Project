@@ -1,0 +1,40 @@
+# Diagrama de Secuencia
+
+Para representar las interacciones entre los objetos del proyecto, en este archivo se presenta el código fuente de del diagrama de secuencia:
+```plantuml
+@startuml
+actor Miembro as Desarrollador
+actor Líder as LíderDelEquipo
+
+LíderDelEquipo->GestorDeProyectos:CrearProyecto
+GestorDeProyectos->BaseDeDatos:GuardarInformaciónDelProyecto
+BaseDeDatos->GestorDeProyectos:ConfirmaciónDeProyectoGuardado
+GestorDeProyectos->LíderDelEquipo:ConfirmaciónDeProyectoCreado
+
+LíderDelEquipo->AsignadorDeTareas:AsignarTarea
+AsignadorDeTareas->BaseDeDatos:GuardarInformaciónDeLaTarea
+BaseDeDatos->AsignadorDeTareas:ConfirmaciónDeTareaGuardada
+AsignadorDeTareas->SistemaDeNotificaciones:NotificarADesarrollador
+SistemaDeNotificaciones->Desarrollador:NotificaciónDeNuevaTarea
+
+Desarrollador->GestorDeTareasKanban:ActualizarEstadoDeTarea
+GestorDeTareasKanban->BaseDeDatos:GuardarEstadoActualizado
+BaseDeDatos->GestorDeTareasKanban:ConfirmaciónDeEstadoGuardado
+GestorDeTareasKanban->SistemaDeNotificaciones:NotificarActualizaciónDeTarea
+SistemaDeNotificaciones->LíderDelEquipo:NotificaciónDeActualizaciónDeTarea
+SistemaDeNotificaciones->Desarrollador:NotificaciónDeActualizaciónDeTarea
+
+Desarrollador->CanalDeComunicación:ComentarEnTarea
+CanalDeComunicación->BaseDeDatos:GuardarComentario
+BaseDeDatos->CanalDeComunicación:ConfirmaciónDeComentarioGuardado
+CanalDeComunicación->LíderDelEquipo:NotificaciónDeComentarioNuevo
+
+LíderDelEquipo->GeneradorDeReportes:GenerarReporteDeProyecto
+GeneradorDeReportes->BaseDeDatos:ObtenerInformaciónDelProyecto
+BaseDeDatos->GeneradorDeReportes:InformaciónDelProyecto
+GeneradorDeReportes->LíderDelEquipo:ReporteGenerado
+
+@enduml
+```
+Dicho diagrama se visualiza a continuación:
+<center><img src="diagrama_secuencia.svg"></center>
